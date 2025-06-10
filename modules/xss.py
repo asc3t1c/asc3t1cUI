@@ -1,7 +1,9 @@
 import requests
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
-from colorama import Fore
+from colorama import Fore, Style, init
 import datetime
+
+init(autoreset=True)  # Automatically reset color after each print
 
 def guess_params(params):
     if not params:
@@ -77,7 +79,8 @@ def run():
             try:
                 res = requests.get(test_url, timeout=5)
                 if payload in res.text:
-                    print(Fore.RED + f"[!] XSS vulnerability detected in parameter: {param} with payload: {payload}")
+                    print(Fore.RED + f"[!] XSS vulnerability detected in parameter: {param} with payload: " 
+                          + Fore.LIGHTYELLOW_EX + payload + Style.RESET_ALL)
                     vulnerable = True
                     vulnerable_params.append(param)
                     results.append((param, True, payload))
