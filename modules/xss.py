@@ -4,7 +4,8 @@ from colorama import Fore
 
 def guess_params(params):
     if not params:
-        common_params = ['id', 'page', 'user', 'search', 'q']
+        common_params = ['id', 'page', 'user', 'search', 'q',
+        'searchTerm']
         params = {p: [''] for p in common_params}
     return params
 
