@@ -4,8 +4,7 @@ from colorama import Fore
 
 def guess_params(params):
     if not params:
-        common_params = ['id', 'page', 'user', 'search', 'q',
-        'searchTerm']
+        common_params = ['id', 'page', 'user', 'search', 'q', 'searchTerm']
         params = {p: [''] for p in common_params}
     return params
 
@@ -23,6 +22,7 @@ def run():
     ]
 
     vulnerable_params = []
+    results = []
 
     for param in params:
         vulnerable = False
@@ -36,11 +36,50 @@ def run():
                     print(Fore.RED + f"[!] XSS vulnerability detected in parameter: {param} with payload: {payload}")
                     vulnerable = True
                     vulnerable_params.append(param)
+                    results.append((param, True, payload))
                     break
             except Exception as e:
                 print(Fore.RED + f"[ERROR] {e}")
         if not vulnerable:
             print(Fore.YELLOW + f"[ ] No XSS detected in parameter: {param}")
+            results.append((param, False, None))
 
     if not vulnerable_params:
         print(Fore.YELLOW + "[!] No vulnerable parameters detected for XSS.")
+
+    # Generate HTML report
+    html_content = """
+    <html>
+    <head><title>XSS Scan Report</title></head>
+    <body>
+    <h1>XSS Scan Report for {url}</h1>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Vulnerable</th>
+                <th>Payload (if vulnerable)</th>
+            </tr>
+        </thead>
+        <tbody>
+    """.format(url=url)
+
+    for param, vulnerable, payload in results:
+        vuln_text = "Yes" if vulnerable else "No"
+        payload_text = payload if vulnerable else "-"
+        html_content += f"<tr><td>{param}</td><td>{vuln_text}</td><td>{payload_text}</td></tr>"
+
+    html_content += """
+        </tbody>
+    </table>
+    </body>
+    </html>
+    """
+
+    with open("xss_scan_report.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    print(Fore.GREEN + "\n[+] HTML report saved to xss_scan_report.html")
+
+if __name__ == "__main__":
+    run()
