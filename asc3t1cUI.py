@@ -27,31 +27,29 @@ def main():
         if choice == '10':
             print("Exiting.")
             break
-        module_name = None
-        if choice == '1':
-            module_name = "modules.xss"
-        elif choice == '2':
-            module_name = "modules.sqli"
-        elif choice == '3':
-            module_name = "modules.path_traversal"
-        elif choice == '4':
-            module_name = "modules.rfi"
-        elif choice == '5':
-            module_name = "modules.lfi"
-        elif choice == '6':
-            module_name = "modules.csrf"
-        elif choice == '7':
-            module_name = "modules.open_redirect"
-        elif choice == '8':
-            module_name = "modules.command_injection"
-        elif choice == '9':
-            module_name = "modules.web_cache"
-        else:
+
+        # Map user choice to module name (folder.module)
+        modules_map = {
+            '1': "modules.xss",
+            '2': "modules.sqli",
+            '3': "modules.path_traversal",
+            '4': "modules.rfi",
+            '5': "modules.lfi",
+            '6': "modules.csrf",
+            '7': "modules.open_redirect",
+            '8': "modules.command_injection",
+            '9': "modules.web_cache",
+        }
+
+        module_name = modules_map.get(choice)
+        if not module_name:
             print(Fore.YELLOW + "Invalid choice. Try again.")
             continue
 
         try:
+            # Import the selected module dynamically
             module = importlib.import_module(module_name)
+            # Call the run() function inside the module
             module.run()
         except Exception as e:
             print(Fore.RED + f"Error loading module: {e}")
