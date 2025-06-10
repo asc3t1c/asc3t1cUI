@@ -7,7 +7,7 @@ from colorama import Fore, init
 init(autoreset=True)
 
 def print_menu():
-    print(Fore.CYAN + "=== asc3t1cUI, the best Vulnerability Scanner and Injector ===")
+    print(Fore.CYAN + "=== asc3t1cUI, the Vulnerability Scanner and Injector ===")
     print(Fore.CYAN + "=== WARNING: This is a CUSTOM SCANNER! You MUST know what you're scanning! ===")
     print("Select vulnerability to test:")
     print("1. XSS")
