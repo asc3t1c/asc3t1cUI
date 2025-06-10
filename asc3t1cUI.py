@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # by nu11secur1ty 2025
+
 import importlib
 from colorama import Fore, init
 
 init(autoreset=True)
 
 def print_menu():
-    print(Fore.CYAN + "=== Vulnerability Scanner ===")
+    print(Fore.CYAN + "=== asc3t1cUI, the best Vulnerability Scanner and Injector ===")
     print(Fore.CYAN + "=== WARNING: This is a CUSTOM SCANNER! You MUST know what you're scanning! ===")
     print("Select vulnerability to test:")
     print("1. XSS")
@@ -23,7 +24,15 @@ def print_menu():
 def main():
     while True:
         print_menu()
-        choice = input("Enter choice (1-10): ").strip()
+        try:
+            choice = input("Enter choice (1-10): ").strip()
+            if choice == '':
+                print(Fore.YELLOW + "No input detected. Exiting.")
+                break
+        except KeyboardInterrupt:
+            print("\n" + Fore.YELLOW + "User interrupted (Ctrl+C). Exiting.")
+            break
+
         if choice == '10':
             print("Exiting.")
             break
