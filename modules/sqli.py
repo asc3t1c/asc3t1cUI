@@ -314,7 +314,7 @@ def run():
             f.write("<style>body { font-family: Arial, sans-serif; background:#f9f9f9; }")
             f.write("table { border-collapse: collapse; width: 100%; }")
             f.write("th, td { border: 1px solid #ddd; padding: 8px; }")
-            f.write("th { background-color: #4CAF50; color: white; }")
+            f.write("th { background-color: #bd0000; color: white; }")
             f.write("tr:nth-child(even){background-color: #f2f2f2;}</style></head><body>")
             f.write("<h1>SQL Injection Scan Report</h1>")
             f.write(f"<p>Target URL: {url}</p>")
