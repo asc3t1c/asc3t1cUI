@@ -2,5 +2,5 @@
 - is POWERFUL and simple web VULNERABILITY SCANNER and EXPLOIT INJECTOR for PROFESSIONALS! Absolutely for FREE! Don't be STUPID!
 
 # VERSION 
-- plum
+- dirty plum 
 ![](/docs/plum.png)
