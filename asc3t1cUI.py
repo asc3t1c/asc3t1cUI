@@ -2,6 +2,7 @@
 # by nu11secur1ty 2025
 
 import importlib
+import sys
 from colorama import Fore, init
 
 init(autoreset=True)
@@ -26,18 +27,18 @@ def main():
         print_menu()
         try:
             choice = input("Enter choice (1-10): ").strip()
-            if choice == '':
-                print(Fore.YELLOW + "No input detected. Exiting.")
-                break
         except KeyboardInterrupt:
             print("\n" + Fore.YELLOW + "User interrupted (Ctrl+C). Exiting.")
+            sys.exit(0)
+
+        if choice == '':
+            print(Fore.YELLOW + "No input detected. Exiting.")
             break
 
         if choice == '10':
             print("Exiting.")
             break
 
-        # Map user choice to module name (folder.module)
         modules_map = {
             '1': "modules.xss",
             '2': "modules.sqli",
@@ -56,12 +57,17 @@ def main():
             continue
 
         try:
-            # Import the selected module dynamically
             module = importlib.import_module(module_name)
-            # Call the run() function inside the module
             module.run()
+        except KeyboardInterrupt:
+            print(Fore.YELLOW + "\nScan interrupted by user (Ctrl+C). Returning to main menu...\n")
+            continue
         except Exception as e:
             print(Fore.RED + f"Error loading module: {e}")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(Fore.YELLOW + "\nExiting due to user interrupt (Ctrl+C).")
+        sys.exit(0)
