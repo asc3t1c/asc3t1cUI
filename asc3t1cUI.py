@@ -20,7 +20,8 @@ def print_menu():
     print("7. Open Redirect")
     print("8. Command Injection")
     print("9. Web Cache")
-    print("10. Exit")
+    print("10 asce3t1c-SQLi")
+    print("11. Exit")
 
 def main():
     while True:
@@ -35,7 +36,7 @@ def main():
             print(Fore.YELLOW + "No input detected. Exiting.")
             break
 
-        if choice == '10':
+        if choice == '11':
             print("Exiting.")
             break
 
@@ -49,6 +50,7 @@ def main():
             '7': "modules.open_redirect",
             '8': "modules.command_injection",
             '9': "modules.web_cache",
+            '10': "asce3t1c-SQLi"
         }
 
         module_name = modules_map.get(choice)
