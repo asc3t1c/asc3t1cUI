@@ -4,8 +4,8 @@ import sys
 
 def run_sqlmap():
     try:
-        print("Your sqlmap env path, FOR EXAMPLE: (D:\\CVE\\sqlmap-nu11secur1ty\\sqlmap.py)...\n")
-        env = "D:\\CVE\\sqlmap-nu11secur1ty\\sqlmap.py"
+        print("Your sqlmap env path, FOR EXAMPLE: (X:\\where\\your_path_to_sqlmap\\sqlmap.py)...\n")
+        env = "X:\\where\\your_path_to_sqlmap\\sqlmap.py"
 
         print("Your URL parameter for testing....\n")
         url = input("Enter URL: ").strip()
