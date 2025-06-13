@@ -27,7 +27,7 @@ def main():
     while True:
         print_menu()
         try:
-            choice = input("Enter choice (1-10): ").strip()
+            choice = input("Enter choice (1-11): ").strip()
         except KeyboardInterrupt:
             print("\n" + Fore.YELLOW + "User interrupted (Ctrl+C). Exiting.")
             sys.exit(0)
@@ -41,17 +41,17 @@ def main():
             break
 
         modules_map = {
-            '1': "modules.xss",
-            '2': "modules.sqli",
-            '3': "modules.path_traversal",
-            '4': "modules.rfi",
-            '5': "modules.lfi",
-            '6': "modules.csrf",
-            '7': "modules.open_redirect",
-            '8': "modules.command_injection",
-            '9': "modules.web_cache",
-            '10': "asce3t1c-SQLi"
-        }
+				'1': "modules.xss",
+				'2': "modules.sqli",
+				'3': "modules.path_traversal",
+				'4': "modules.rfi",
+				'5': "modules.lfi",
+				'6': "modules.csrf",
+				'7': "modules.open_redirect",
+				'8': "modules.command_injection",
+				'9': "modules.web_cache",
+				'10': "modules.sqlmap_external",
+}
 
         module_name = modules_map.get(choice)
         if not module_name:
